@@ -6,7 +6,7 @@ export const create = async (input: DocumentDefinition<Omit<CountryDocument, "cr
 }
 
 export const findAll = async (query: FilterQuery<CountryDocument>, options: QueryOptions = { lean: true }) => {
-   return await Country.find(); 
+   return await Country.find(query, {}, options).sort({ name: 1 }); 
 }
 
 export const findOne = async (query: FilterQuery<CountryDocument>, options: QueryOptions = { lean: true }) => {

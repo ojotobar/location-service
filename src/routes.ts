@@ -7,6 +7,8 @@ import { createSessionSchema } from "./schema/session.schema";
 import requireUser from "./middlewares/requireUser";
 import { createCountryHandler, deleteCountryHandler, getAllCountriesHandler, getCountryHandler, updateCountryHandler } from "./controllers/country.controller";
 import { createCountrySchema, deleteCountrySchema, findCountrySchema, updateCountrySchema } from "./schema/country.schema";
+import { createStateSchema, deleteStateSchema, findByCountrySchema, findStateSchema, updateStateSchema } from "./schema/state.schema";
+import { createStateHandler, deleteStateHandler, getByCountryHandler, getStateHandler, updateStateHandler } from "./controllers/state.controller";
 
 const routes = (app: Express) => {
     app.get('/ping', (req: Request, res: Response) => 
@@ -31,6 +33,17 @@ const routes = (app: Express) => {
     app.put("/api/countries/:countryId", [requireUser, validateResource(updateCountrySchema)], updateCountryHandler)
 
     app.delete("/api/countries/:countryId", [requireUser, validateResource(deleteCountrySchema)], deleteCountryHandler)
+
+    //State Routes
+    app.post("/api/states/:countryId", [requireUser, validateResource(createStateSchema)], createStateHandler);
+
+    app.get("/api/states", validateResource(findByCountrySchema), getByCountryHandler);
+
+    app.get("/api/states/:id", validateResource(findStateSchema), getStateHandler);
+
+    app.put("/api/states/:id", [requireUser, validateResource(updateStateSchema)], updateStateHandler)
+
+    app.delete("/api/states/:id", [requireUser, validateResource(deleteStateSchema)], deleteStateHandler)
 }
 
 export default routes;
