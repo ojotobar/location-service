@@ -9,6 +9,8 @@ import { createCountryHandler, deleteCountryHandler, getAllCountriesHandler, get
 import { createCountrySchema, deleteCountrySchema, findCountrySchema, updateCountrySchema } from "./schema/country.schema";
 import { createStateSchema, deleteStateSchema, findByCountrySchema, findStateSchema, updateStateSchema } from "./schema/state.schema";
 import { createStateHandler, deleteStateHandler, getByCountryHandler, getStateHandler, updateStateHandler } from "./controllers/state.controller";
+import { createCountySchema, deleteCountySchema, findByStateSchema, findCountySchema, updateCountySchema } from "./schema/county.schema";
+import { createCountyHandler, deleteCountyHandler, getByStateHandler, getCountyHandler, updateCountyHandler } from "./controllers/county.controller";
 
 const routes = (app: Express) => {
     app.get('/ping', (req: Request, res: Response) => 
@@ -44,6 +46,17 @@ const routes = (app: Express) => {
     app.put("/api/states/:id", [requireUser, validateResource(updateStateSchema)], updateStateHandler)
 
     app.delete("/api/states/:id", [requireUser, validateResource(deleteStateSchema)], deleteStateHandler)
+
+     //County/Local Government Routes
+     app.post("/api/districts/:stateId", [requireUser, validateResource(createCountySchema)], createCountyHandler);
+
+     app.get("/api/districts", validateResource(findByStateSchema), getByStateHandler);
+ 
+     app.get("/api/districts/:id", validateResource(findCountySchema), getCountyHandler);
+ 
+     app.put("/api/districts/:id", [requireUser, validateResource(updateCountySchema)], updateCountyHandler)
+ 
+     app.delete("/api/districts/:id", [requireUser, validateResource(deleteCountySchema)], deleteCountyHandler)
 }
 
 export default routes;
