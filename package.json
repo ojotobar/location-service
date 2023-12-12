@@ -6,7 +6,8 @@
   "author": "Ojo Toba Rufus",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "start": "ts-node-script src/app.ts"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
